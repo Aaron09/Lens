@@ -5,10 +5,12 @@ import './index.css';
 class Home extends React.Component {
   render() {
     return (
-      <h4> Hi! My name is Aaron! </h4>
+      <h4> Hi! My name is Aaron. </h4>
     );
   }
 }
+
+///////
 
 ReactDOM.render(
   <Home />,
