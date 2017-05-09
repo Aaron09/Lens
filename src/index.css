@@ -1,24 +1,34 @@
-.everestImage {
-  max-height: 100%;
-  max-width: 100%;
-  position: relative; 
+
+.homeButton {
+  font-size: 20px;
+  color: #000000;
 }
 
-.title {
-  position: absolute;
-  left: 20px; 
-  top: 0px;
+.navigationBar {
+  background-color: #5FC8EA;
 }
 
-.nameInputForm {
-  position: absolute;
-  left: 20px;
-  top: 100px;
+.storeNavButton {
+  font-size: 20px;
+  color: #000000;
 }
 
-.nameInputForm:hover {
-  position: absolute;
-  left: 20px;
-  top: 100px;
-  font-size: 40px;
+.editNavButton {
+  font-size: 20px;
+  color: #000000;
+}
+
+.shareNavButton {
+  font-size: 20px;
+  color: #000000;
+}
+
+.loginNavButton {
+  font-size: 20px;
+  color: #000000;
+}
+
+.signUpNavButton {
+  font-size: 20px;
+  color: #000000;
 }
