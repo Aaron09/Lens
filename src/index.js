@@ -13,7 +13,7 @@ class Home extends React.Component {
         <ul className="nav">
           <div className="leftSideButtons">
             <li className="homeNavButton">
-               <a href="/"> SmartEdit </a>
+               <a href="/"> PhotoBin </a>
             </li>          
           </div>
           <div className="rightSideButtons">
