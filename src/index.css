@@ -2,32 +2,21 @@
   background-color: #5FC8EA;
 }
 
-.homeNavButton {
-  font-size: 20px;
-  color: #000000;
+.leftSideButtons {
+  float: left;
 }
 
-.storeNavButton {
-  font-size: 20px;
-  color: #000000;
+.rightSideButtons {
+  float: right;
 }
 
-.editNavButton {
-  font-size: 20px;
+li {
+  float: left;
+  padding: 10px;
   color: #000000;
+  font-size: 20px;
 }
 
-.shareNavButton {
-  font-size: 20px;
-  color: #000000;
-}
-
-.loginNavButton {
-  font-size: 20px;
-  color: #000000;
-}
-
-.signUpNavButton {
-  font-size: 20px;
-  color: #000000;
+li:hover {
+  color: #ffffff; 
 }

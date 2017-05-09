@@ -9,25 +9,21 @@ import "./index.css";
 class Home extends React.Component {
   render() {
     return (
-      <Nav className="navigationBar" bsStyle="pills">
-        <NavItem href="/">
-          <span className="homeNavButton">SmartEdit</span>
-        </NavItem>
-        <NavItem href="/store"> 
-          <span className="storeNavButton">Store</span>
-        </NavItem>
-        <NavItem href="/edit"> 
-          <span className="editNavButton">Edit</span>
-        </NavItem>
-        <NavItem href="/share"> 
-          <span className="shareNavButton">Share</span>
-        </NavItem>
-        <NavItem href="/login"> 
-          <span className="loginNavButton">Login</span>
-        </NavItem>
-        <NavItem href="/signup"> 
-          <span className="signUpNavButton">Sign Up</span>
-        </NavItem>
+       <Nav className="navigationBar" bsStyle="pills">
+        <ul className="nav">
+          <div className="leftSideButtons">
+            <li className="homeNavButton">
+               <a href="/"> SmartEdit </a>
+            </li>          
+          </div>
+          <div className="rightSideButtons">
+            <li className="storeNavButton" href="/store">Store</li>
+            <li className="editNavButton" href="/edit">Edit</li>
+            <li className="shareNavButton" href="/share">Share</li>
+            <li className="loginNavButton" href="/login">Login</li>
+            <li className="signUpNavButton" href="/signup">Sign Up</li>
+          </div>
+        </ul>
       </Nav>
     );
   }
