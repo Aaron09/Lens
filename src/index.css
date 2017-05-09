@@ -1,5 +1,5 @@
 .navigationBar {
-  background-color: #5FC8EA;
+  background-color: #000000;
 }
 
 .leftSideButtons {
@@ -12,11 +12,14 @@
 
 li {
   float: left;
+}
+
+a {
   padding: 10px;
-  color: #000000;
+  color: #ffffff;
   font-size: 20px;
 }
 
-li:hover {
+a:hover {
   color: #ffffff; 
 }

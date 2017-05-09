@@ -17,11 +17,21 @@ class Home extends React.Component {
             </li>          
           </div>
           <div className="rightSideButtons">
-            <li className="storeNavButton" href="/store">Store</li>
-            <li className="editNavButton" href="/edit">Edit</li>
-            <li className="shareNavButton" href="/share">Share</li>
-            <li className="loginNavButton" href="/login">Login</li>
-            <li className="signUpNavButton" href="/signup">Sign Up</li>
+            <li className="storeNavButton">
+              <a href="/store"> Store </a>
+            </li>
+            <li className="editNavButton"> 
+              <a href="/edit"> Edit </a>
+            </li>
+            <li className="shareNavButton">
+              <a href="/share"> Share </a>
+            </li>
+            <li className="loginNavButton">
+              <a href="/login"> Login </a>
+            </li>
+            <li className="signUpNavButton">
+              <a href="/signup"> Sign Up </a>
+            </li>
           </div>
         </ul>
       </Nav>
