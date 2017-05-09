@@ -1,11 +1,10 @@
-
-.homeButton {
-  font-size: 20px;
-  color: #000000;
-}
-
 .navigationBar {
   background-color: #5FC8EA;
+}
+
+.homeNavButton {
+  font-size: 20px;
+  color: #000000;
 }
 
 .storeNavButton {
