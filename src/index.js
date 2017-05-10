@@ -6,14 +6,22 @@ import { NavItem } from "react-bootstrap";
 
 import "./index.css";
 
-class Home extends React.Component {
+class BackgroundImage extends React.Component {
+  render() {
+    return (
+      <img src="indexBackground.jpeg" className="backgroundImage" />
+    );
+  }
+}
+
+class Navigation extends React.Component {
   render() {
     return (
        <Nav className="navigationBar" bsStyle="pills">
         <ul className="nav">
           <div className="leftSideButtons">
             <li className="homeNavButton">
-               <a href="/"> PhotoBin </a>
+               <a href="/"> Lens </a>
             </li>          
           </div>
           <div className="rightSideButtons">
@@ -35,6 +43,28 @@ class Home extends React.Component {
           </div>
         </ul>
       </Nav>
+    );
+  }
+}
+
+class Slogan extends React.Component {
+  render() {
+    return (
+        <div className="slogan">
+          <h7> The world, the way you want to see it. </h7>
+        </div>
+    );
+  }
+}
+
+class Home extends React.Component {
+  render() {
+    return (
+      <div className="homeParent">
+        <BackgroundImage />
+        <Navigation />
+        <Slogan />
+      </div>
     );
   }
 }
