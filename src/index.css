@@ -1,15 +1,15 @@
-li {
+.navigationBar > ul > div > li {
   float: left;
 }
 
-a {
-  padding: 10px;
+.navigationBar > ul > div > li > a {
+  margin: 10px;
   color: #A9A9A9;
   font-size: 20px;
   font-family: Palatino, "Palatino Linotype", "Palatino LT STD"
 }
 
-a:hover {
+.navigationBar > ul > div > li > a:hover {
   color: #ffffff; 
   text-decoration: none;
 }
@@ -22,7 +22,7 @@ a:hover {
 }
 
 .navigationBar {
-  padding-top: 10px;
+  margin-top: 10px;
   background-color: #000000;
   padding-bottom: 10px;
   border-bottom: 1px solid #A9A9A9;
@@ -50,9 +50,36 @@ a:hover {
   font-family: Futura, "Trebuchet MS", Arial, sans-serif;
 }
 
-.loginForm {
+/*.loginForm {
   position: absolute;
   top: 0;
   margin-top: 40%;
-  margin-left: 35%;
+  margin-left: 42%;
+}*/
+
+.productDescription {
+  position: absolute;
+  margin-top: 48%;
+  color: #C0C0C0;
+  top: 0;
+  margin-left: 25%;
+  font-size: 17px;
+  font-style: bold;
+}
+
+.platformIntegrationInformation {
+  position: absolute;
+  top: 0;
+  margin-top: 52%;
+  margin-left: 40%;
+}
+
+.platformIntegrationInformation > li {
+  display: inline;
+  margin: 1%;
+}
+
+.platformIntegrationInformation > li > img {
+  width: 6%;
+  height: 6%;
 }
