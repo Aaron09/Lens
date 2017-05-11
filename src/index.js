@@ -3,13 +3,19 @@ import ReactDOM from "react-dom";
 import { Button } from 'react-bootstrap';
 import { Nav } from "react-bootstrap";
 import { NavItem } from "react-bootstrap";
+import { Form } from "react-bootstrap"
+import { FormGroup } from "react-bootstrap";
+import { FormControl } from "react-bootstrap";
+import { Col } from "react-bootstrap";
+import { ControlLabel } from "react-bootstrap";
+
 
 import "./index.css";
 
 class BackgroundImage extends React.Component {
   render() {
     return (
-      <img src="indexBackground.jpeg" className="backgroundImage" />
+      <img src="indexBackgroundChicago.jpeg" className="backgroundImage" />
     );
   }
 }
@@ -57,6 +63,25 @@ class Slogan extends React.Component {
   }
 }
 
+class LoginForm extends React.Component {
+  render() {
+    return (
+      <Form horizontal className="loginForm">
+        <FormGroup controlId="formHorizontalEmail">
+          <Col sm={10}>
+            <FormControl type="email" placeholder="Email" />
+          </Col>
+        </FormGroup>
+        <FormGroup controlId="formHorizontalPassword">
+          <Col sm={10}>
+            <FormControl type="password" placeholder="Password" />
+          </Col>
+        </FormGroup>
+      </Form>
+    );
+  }
+}
+
 class Home extends React.Component {
   render() {
     return (
@@ -64,6 +89,7 @@ class Home extends React.Component {
         <BackgroundImage />
         <Navigation />
         <Slogan />
+        <LoginForm />
       </div>
     );
   }
