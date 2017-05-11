@@ -190,20 +190,51 @@ class Home extends React.Component {
     this.state = props;
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.state = nextProps;
+  }
+
   render() {
-    console.log(this.state);
-    if (this.state === "/stream") {
+    let extension = this.state["pageExtension"];
+    if (extension === "/stream") {
       return (
-        <div className="homeParent">
+        <div className="uiContainer">
           <BackgroundImage />
           <Navigation />
           <MStream />
           <AboutInformation />
         </div>
       );
+    } else if (extension === "/settings") {
+      return (
+        <div className="uiContainer">
+          <BackgroundImage />
+          <Navigation />
+          <Settings />
+          <AboutInformation />
+        </div>
+      );
+    } else if (extension === "/login") {
+      return (
+        <div className="uiContainer">
+          <BackgroundImage />
+          <Navigation />
+          <Login />
+          <AboutInformation />
+        </div>
+      );
+    } else if (extension === "/signup") {
+      return (
+        <div className="uiContainer">
+          <BackgroundImage />
+          <Navigation />
+          <SignUp />
+          <AboutInformation />
+        </div>
+      );
     } else {
       return (
-        <div className="homeParent">
+        <div className="uiContainer">
           <BackgroundImage />
           <Navigation />
           <Slogan />
@@ -215,13 +246,27 @@ class Home extends React.Component {
 }
 
 // JS Functions
+
+/**
+ * Sets the page extension to load the proper components
+ */
 function setPageExtension(pageExtension) {
- ReactDOM.render(React.createElement(Home, pageExtension), document.getElementById("root"));
+  var props = new Object();
+  props["pageExtension"] = pageExtension;
+
+  ReactDOM.render(React.createElement(Home, props), document.getElementById("root"));
 }
 
 ////////
 
-ReactDOM.render(
-  React.createElement(Home, "/stream"),
-  document.getElementById("root")
-);
+function loadPage() {
+  ReactDOM.render(<Home />, document.getElementById("root"));
+}
+
+var opening = true;
+
+if (opening) {
+  loadPage();
+  opening = false;
+  console.log("opening page");  
+}
