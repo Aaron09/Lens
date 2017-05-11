@@ -1,15 +1,16 @@
-.navigationBar > ul > div > li {
+.nav > div > li {
   float: left;
 }
 
-.navigationBar > ul > div > li > a {
+.nav > div > li > a {
   margin: 10px;
   color: #A9A9A9;
   font-size: 20px;
-  font-family: Palatino, "Palatino Linotype", "Palatino LT STD"
+  font-family: Palatino, "Palatino Linotype", "Palatino LT STD";
+  text-decoration: none;
 }
 
-.navigationBar > ul > div > li > a:hover {
+.nav > div > li > a:hover {
   color: #ffffff; 
   text-decoration: none;
 }
@@ -21,7 +22,7 @@
   opacity: .90;
 }
 
-.navigationBar {
+.nav {
   margin-top: 10px;
   background-color: #000000;
   padding-bottom: 10px;

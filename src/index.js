@@ -9,6 +9,12 @@ import { FormControl } from "react-bootstrap";
 import { Col } from "react-bootstrap";
 import { ControlLabel } from "react-bootstrap";
 
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from "react-router-dom"
+
 
 import "./index.css";
 
@@ -18,7 +24,7 @@ import "./index.css";
 class BackgroundImage extends React.Component {
   render() {
     return (
-      <img src="indexBackgroundChicago.jpeg" className="backgroundImage" />
+      <img src="images/backgrounds/indexBackgroundChicago.jpeg" className="backgroundImage" />
     );
   }
 }
@@ -29,32 +35,64 @@ class BackgroundImage extends React.Component {
 class Navigation extends React.Component {
   render() {
     return (
-       <Nav className="navigationBar" bsStyle="pills">
+       <Router className="navigationBar" >
         <ul className="nav">
           <div className="leftSideButtons">
             <li className="homeNavButton">
-               <a href="/"> Lens </a>
+              <Link to="/" onClick={() => setPageExtension("/")}> Lens </Link>
             </li>          
           </div>
           <div className="rightSideButtons">
             <li className="streamNavButton"> 
-              <a href="/stream"> Stream </a>
+              <Link to="/stream" onClick={() => setPageExtension("/stream")}> Stream </Link>
             </li>
             <li className="settingsNavButton">
-              <a href="/settings"> Settings </a>
+              <Link to="/settings" onClick={() => setPageExtension("/settings")}> Settings </Link>
             </li>
             <li className="loginNavButton">
-              <a href="/login"> Login </a>
+              <Link to="/login" onClick={() => setPageExtension("/login")}> Login </Link>
             </li>
             <li className="signUpNavButton">
-              <a href="/signup"> Sign Up </a>
+              <Link to="/signup" onClick={() => setPageExtension("/signup")}> Sign Up </Link>
             </li>
           </div>
         </ul>
-      </Nav>
+      </Router>
     );
   }
 }
+
+class MStream extends React.Component {
+  render() {
+    return (
+      <h1> MStream </h1>
+    );
+  }
+}
+
+class Settings extends React.Component {
+  render() {
+    return (
+      <h1> Settings </h1>
+    );
+  }
+}
+
+class Login extends React.Component {
+  render() {
+    return (
+      <h1> Login </h1>
+    );
+  }
+}
+
+class SignUp extends React.Component {
+  render() {
+    return (
+      <h1> Sign Up </h1>
+    );
+  }
+} 
 
 /**
  * Product Slogan
@@ -117,46 +155,73 @@ class PlatformIntegrationInformation extends React.Component {
     return (
       <ul className="platformIntegrationInformation">
         <li className="facebookInfo">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/F_icon.svg/2000px-F_icon.svg.png" />
-        </li>
-        <li className="twitterInfo">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Twitter_Logo_White_On_Blue_Circular.svg/2000px-Twitter_Logo_White_On_Blue_Circular.svg.png" />
+          <img src="images/supported_media/facebookLogo.png" />
         </li>
         <li className="instagramInfo">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/2000px-Instagram_logo_2016.svg.png" />
+          <img src="images/supported_media/instagramLogo.png" />
+        </li>
+        <li className="twitterInfo">
+          <img src="images/supported_media/twitterLogo.png" />
         </li>
       </ul>
     );
   }
 }
 
+/**
+ * Description of the product
+ */
 class ProductDescription extends React.Component {
   render() {
     return (
       <div className="productDescription">
-        <h7> An integrated content viewer, showing you exactly what you want to see. </h7>
+        <h7> An integrated media viewer, showing you exactly what you want to see. </h7>
       </div>
     );
   }
 }
 
+/**
+ * Home panel containing all UI elements
+ */
 class Home extends React.Component {
-  render() {
-    return (
-      <div className="homeParent">
-        <BackgroundImage />
-        <Navigation />
-        <Slogan />
-        <AboutInformation />
-      </div>
-    );
+  constructor(props) {
+    super(props);
+    this.state = props;
   }
+
+  render() {
+    console.log(this.state);
+    if (this.state === "/stream") {
+      return (
+        <div className="homeParent">
+          <BackgroundImage />
+          <Navigation />
+          <MStream />
+          <AboutInformation />
+        </div>
+      );
+    } else {
+      return (
+        <div className="homeParent">
+          <BackgroundImage />
+          <Navigation />
+          <Slogan />
+          <AboutInformation />
+        </div>
+      );
+    }
+  }
+}
+
+// JS Functions
+function setPageExtension(pageExtension) {
+ ReactDOM.render(React.createElement(Home, pageExtension), document.getElementById("root"));
 }
 
 ////////
 
 ReactDOM.render(
-  <Home />,
+  React.createElement(Home, "/stream"),
   document.getElementById("root")
 );
-
