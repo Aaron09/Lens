@@ -8,7 +8,6 @@ import { FormGroup } from "react-bootstrap";
 import { FormControl } from "react-bootstrap";
 import { Col } from "react-bootstrap";
 import { ControlLabel } from "react-bootstrap";
-import FacebookLogin from "react-facebook-login";
 
 import {
   BrowserRouter as Router,
@@ -74,20 +73,66 @@ class Settings extends React.Component {
 }
 
 class Login extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = props;
+    console.log(this.state);
+    this.loginText = "Login with Facebook";
+  }
+
+  initiateLoginOrLogout(response) {
+    const connectionStatus = response.status;
+    console.log("CONNECTION: " + connectionStatus);
+    console.log("TEXT: " + this.loginText);
+    if (connectionStatus != "connected" && this.loginText === "Login with Facebook") {
+      this.loginText = "Sign Out";
+      window.FB.login();
+      loadStream(response)
+    } else if (connectionStatus === "connected" && this.loginText === "Sign Out") {
+      this.loginText = "Login with Facebook";
+      window.FB.logout(loadLogin());
+    } else if (connectionStatus === "connected") {
+      this.loginText = "Sign Out";
+    }
+    ReactDOM.render(<Home />, document.getElementById("root"));
+  };
+
+  loginLogoutClick() {
+    this.checkLoginState();
+  };
+
+  checkLoginState() {
+    window.FB.getLoginStatus(function(response) {
+      this.initiateLoginOrLogout(response);
+    }.bind(this));
+  };
+
   componentDidMount() {
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId      : '280945375708713',
-        cookie     : true,  // enable cookies to allow the server to access
-                          // the session
-        xfbml      : true,  // parse social plugins on this page
-        version    : 'v2.1' // use version 2.1
-      });
-      
-      // FB.getLoginStatus(function(response) {
-      //   this.statusChangeCallback(response);
-      // }.bind(this));
-    }.bind(this);
+    console.log("mounted");
+    if (!window.FB) {
+      window.fbAsyncInit = function() {
+        window.FB.init({
+          appId      : '280945375708713',
+          cookie     : true,  // enable cookies to allow the server to access
+                            // the session
+          xfbml      : true,  // parse social plugins on this page
+          version    : 'v2.1' // use version 2.1
+        });
+        
+        window.FB.getLoginStatus(function(response) {
+          console.log("getting status");
+          if (response.status === "connected") {
+            loadStream(response);
+          }
+        }.bind(this));
+      }.bind(this);
+    } else  {
+       window.FB.getLoginStatus(function(response) {
+          console.log("getting status");
+          this.initiateLoginOrLogout(response);
+        }.bind(this));
+    }
 
   // Load the SDK asynchronously
     (function(d, s, id) {
@@ -102,8 +147,8 @@ class Login extends React.Component {
   render() {
     return (
       <div className="allLogin">
-        <Button className="facebookLoginButton" bsStyle="primary" onClick={() => loginLogoutClick()}> 
-          Login with Facebook
+        <Button ref="facebookLoginButton" className="facebookLoginButton" bsStyle="primary" onClick={() => this.loginLogoutClick()}> 
+            {this.loginText}
         </Button>
       </div>
     );
@@ -176,6 +221,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = props;
+    console.log(this.state);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -183,8 +229,10 @@ class Home extends React.Component {
   }
 
   render() {
+    
     let extension = this.state["pageExtension"];
     if (extension === "/stream") {
+      console.log("STREAM DETECTEd");
       return (
         <div className="uiContainer">
           <BackgroundImage />
@@ -207,8 +255,8 @@ class Home extends React.Component {
         <div className="uiContainer">
           <BackgroundImage />
           <Navigation />
-          <Slogan />
-          <Login />
+          <Slogan />,
+          {React.createElement(Login, this.state)},
           <AboutInformation />
         </div>
       );
@@ -224,35 +272,40 @@ class Home extends React.Component {
 function setPageExtension(pageExtension) {
   var props = new Object();
   props["pageExtension"] = pageExtension;
+  props["loadType"] = "nonDefaultLoad"
 
   ReactDOM.render(React.createElement(Home, props), document.getElementById("root"));
 }
 
-const responseFacebook = (response) => {
+/**
+ * Renders the stream UI components and gets the data
+ */
+function loadStream(response) {
+  console.log("stream loaded");
   console.log(response);
+  setPageExtension("/stream");
 }
 
 /**
- * Triggered when the user clicks to login or log out with facebook
+ * Renders the UI components
  */
-function loginLogoutClick() {
-   console.log("log in log out click");
+function loadLogin() {
+  console.log("User is now logged out.");
 }
 
 ////////
 
-function loadPage() {
-  ReactDOM.render(<Home />, document.getElementById("root"));
+function loadInitialPage() {
+  var props = new Object();
+  props["loadType"] = "defaultLoad";
+
+  ReactDOM.render(React.createElement(Home, props), document.getElementById("root"));
 }
 
 var opening = true;
 
 if (opening) {
-  loadPage();
+  loadInitialPage();
   opening = false;
   console.log("opening page");  
-}
-
-FacebookLogin.getLoginStatus(function(response) {
-    responseFacebook(response);
-});
+};
