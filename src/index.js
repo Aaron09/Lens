@@ -8,6 +8,7 @@ import { FormGroup } from "react-bootstrap";
 import { FormControl } from "react-bootstrap";
 import { Col } from "react-bootstrap";
 import { ControlLabel } from "react-bootstrap";
+import FacebookLogin from "react-facebook-login";
 
 import {
   BrowserRouter as Router,
@@ -49,12 +50,6 @@ class Navigation extends React.Component {
             <li className="settingsNavButton">
               <Link to="/settings" onClick={() => setPageExtension("/settings")}> Settings </Link>
             </li>
-            <li className="loginNavButton">
-              <Link to="/login" onClick={() => setPageExtension("/login")}> Login </Link>
-            </li>
-            <li className="signUpNavButton">
-              <Link to="/signup" onClick={() => setPageExtension("/signup")}> Sign Up </Link>
-            </li>
           </div>
         </ul>
       </Router>
@@ -79,20 +74,41 @@ class Settings extends React.Component {
 }
 
 class Login extends React.Component {
+  componentDidMount() {
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '280945375708713',
+        cookie     : true,  // enable cookies to allow the server to access
+                          // the session
+        xfbml      : true,  // parse social plugins on this page
+        version    : 'v2.1' // use version 2.1
+      });
+      
+      // FB.getLoginStatus(function(response) {
+      //   this.statusChangeCallback(response);
+      // }.bind(this));
+    }.bind(this);
+
+  // Load the SDK asynchronously
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  };
+
   render() {
     return (
-      <h1> Login </h1>
+      <div className="allLogin">
+        <Button className="facebookLoginButton" bsStyle="primary" onClick={() => loginLogoutClick()}> 
+          Login with Facebook
+        </Button>
+      </div>
     );
   }
 }
-
-class SignUp extends React.Component {
-  render() {
-    return (
-      <h1> Sign Up </h1>
-    );
-  }
-} 
 
 /**
  * Product Slogan
@@ -100,38 +116,10 @@ class SignUp extends React.Component {
 class Slogan extends React.Component {
   render() {
     return (
-        <div className="slogan">
-          <h7> The world, the way you want to see it. </h7>
-        </div>
+        <h7 className="slogan"> The world, the way you want to see it. </h7>
     );
   }
 }
-
-/*class LoginForm extends React.Component {
-  render() {
-    return (
-      <Form horizontal className="loginForm">
-        <FormGroup controlId="formHorizontalEmail">
-          <Col >
-            <FormControl type="email" placeholder="Email" />
-          </Col>
-        </FormGroup>
-        <FormGroup controlId="formHorizontalPassword">
-          <Col >
-            <FormControl type="password" placeholder="Password" />
-          </Col>
-        </FormGroup>
-        <FormGroup>
-          <Col smOffset={7}>
-            <Button type="submit">
-              Login
-            </Button>
-          </Col>
-        </FormGroup>
-      </Form>
-    );
-  }
-}*/
 
 /**
  * All information in the about section
@@ -214,30 +202,13 @@ class Home extends React.Component {
           <AboutInformation />
         </div>
       );
-    } else if (extension === "/login") {
-      return (
-        <div className="uiContainer">
-          <BackgroundImage />
-          <Navigation />
-          <Login />
-          <AboutInformation />
-        </div>
-      );
-    } else if (extension === "/signup") {
-      return (
-        <div className="uiContainer">
-          <BackgroundImage />
-          <Navigation />
-          <SignUp />
-          <AboutInformation />
-        </div>
-      );
     } else {
       return (
         <div className="uiContainer">
           <BackgroundImage />
           <Navigation />
           <Slogan />
+          <Login />
           <AboutInformation />
         </div>
       );
@@ -257,6 +228,17 @@ function setPageExtension(pageExtension) {
   ReactDOM.render(React.createElement(Home, props), document.getElementById("root"));
 }
 
+const responseFacebook = (response) => {
+  console.log(response);
+}
+
+/**
+ * Triggered when the user clicks to login or log out with facebook
+ */
+function loginLogoutClick() {
+   console.log("log in log out click");
+}
+
 ////////
 
 function loadPage() {
@@ -270,3 +252,7 @@ if (opening) {
   opening = false;
   console.log("opening page");  
 }
+
+FacebookLogin.getLoginStatus(function(response) {
+    responseFacebook(response);
+});

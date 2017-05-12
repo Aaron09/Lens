@@ -1,3 +1,7 @@
+/**
+ * Navigation bar
+ */
+
 .nav > div > li {
   float: left;
 }
@@ -13,13 +17,6 @@
 .nav > div > li > a:hover {
   color: #ffffff; 
   text-decoration: none;
-}
-
-.backgroundImage {
-  background-size: cover;
-  max-width: 100%;
-  max-height: 100%;
-  opacity: .90;
 }
 
 .nav {
@@ -40,30 +37,64 @@
   float: right;
 }
 
+/**
+ * Background image
+ */
+
+.backgroundImage {
+  background-size: cover;
+  max-width: 100%;
+  max-height: 100%;
+  opacity: .90;
+}
+
+/**
+ * Slogan
+ */
+
 .slogan {
   position: absolute;
-  margin-top: 20%;
+  margin-top: 15%;
   color: #ffffff;
   top: 0;
-  margin-left: 18%;
+  left: 0;
+  text-align: center;
+  margin-left: 24%;
+  margin-right: 23%;
   font-size: 40px;
   font-style: bold;
   font-family: Futura, "Trebuchet MS", Arial, sans-serif;
 }
 
-/*.loginForm {
-  position: absolute;
+/**
+ * Login
+ */
+
+.allLogin {
   top: 0;
-  margin-top: 40%;
-  margin-left: 42%;
-}*/
+  width: 18%;
+  margin-left: 41%;
+  margin-right: 41%;
+  height: 30%;
+  margin-top: 23%;
+  position: absolute;
+}
+
+.facebookLoginButton {
+
+}
+
+/**
+ * Product information
+ */
 
 .productDescription {
   position: absolute;
-  margin-top: 48%;
-  color: #C0C0C0;
+  margin-top: 35%;
+  color: #ffffff;
   top: 0;
-  margin-left: 25%;
+  margin-left: 30%;
+  margin-right: 25%;
   font-size: 17px;
   font-style: bold;
 }
@@ -71,7 +102,7 @@
 .platformIntegrationInformation {
   position: absolute;
   top: 0;
-  margin-top: 52%;
+  margin-top: 40%;
   margin-left: 40%;
 }
 
