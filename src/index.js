@@ -72,44 +72,57 @@ class Settings extends React.Component {
   }
 }
 
+/**
+ * Class handling user login and log out statuses
+ */
 class Login extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = props;
-    console.log(this.state);
     this.loginText = "Login with Facebook";
   }
 
+  /**
+   * Logs the user in or out depending on the current connection status
+   */
   initiateLoginOrLogout(response) {
     const connectionStatus = response.status;
-    console.log("CONNECTION: " + connectionStatus);
-    console.log("TEXT: " + this.loginText);
     if (connectionStatus != "connected" && this.loginText === "Login with Facebook") {
       this.loginText = "Sign Out";
       window.FB.login();
-      loadStream(response)
+      // loadStream(response)
     } else if (connectionStatus === "connected" && this.loginText === "Sign Out") {
       this.loginText = "Login with Facebook";
-      window.FB.logout(loadLogin());
+      window.FB.logout();
     } else if (connectionStatus === "connected") {
       this.loginText = "Sign Out";
     }
     ReactDOM.render(<Home />, document.getElementById("root"));
   };
 
+  /**
+   * Called when the user clicks the login / sign out button
+   */
   loginLogoutClick() {
     this.checkLoginState();
   };
 
+  /**
+   * Gets the user's current login status from Facebook and passes it
+   * to the login / logout handling function
+   */
   checkLoginState() {
     window.FB.getLoginStatus(function(response) {
       this.initiateLoginOrLogout(response);
     }.bind(this));
   };
 
+  /**
+   * Called when the component mounts in the UI
+   */
   componentDidMount() {
-    console.log("mounted");
+    // if this is the first time the home screen is loading
+    // we must initialize Facebook
     if (!window.FB) {
       window.fbAsyncInit = function() {
         window.FB.init({
@@ -121,7 +134,7 @@ class Login extends React.Component {
         });
         
         window.FB.getLoginStatus(function(response) {
-          console.log("getting status");
+          // upon opening the ma
           if (response.status === "connected") {
             loadStream(response);
           }
@@ -218,27 +231,78 @@ class ProductDescription extends React.Component {
  * Home panel containing all UI elements
  */
 class Home extends React.Component {
+  
   constructor(props) {
     super(props);
     this.state = props;
-    console.log(this.state);
   }
 
   componentWillReceiveProps(nextProps) {
     this.state = nextProps;
   }
 
+  /**
+   * This is called before any other UI components. 
+   * Check the users connection status here before loading anything else.
+   * If the user is already logged in, proceed directly to the stream.
+   */
   render() {
-    
-    let extension = this.state["pageExtension"];
-    if (extension === "/stream") {
-      console.log("STREAM DETECTEd");
+    return getMainUI(this.state.pageExtension);
+  }
+}
+
+// JS Functions
+
+/**
+ * Sets the page extension to load the proper components
+ */
+function setPageExtension(pageExtension) {
+  var props = new Object();
+  props["pageExtension"] = pageExtension;
+
+  // if the user is coming from another page of the website
+  props["loadType"] = "nonDefaultLoad"
+
+  ReactDOM.render(React.createElement(Home, props), document.getElementById("root"));
+}
+
+/**
+ * Renders the stream UI components and gets the data
+ */
+function loadStream(response) {
+  setPageExtension("/stream");
+}
+
+/**
+ * Renders the UI components
+ */
+function loadLogin() {
+  console.log("User is now logged out.");
+}
+
+/**
+ * This function loads the initial page when the user first arrives at the website
+ */
+function loadInitialPage() {
+  var props = new Object();
+
+  // when the user first opens the website
+  props["loadType"] = "defaultLoad";
+  props["pageExtension"] = "/";
+
+  ReactDOM.render(React.createElement(Home, props), document.getElementById("root"));
+}
+
+/**
+ * Returns the main user interface components for the current state of the application
+ */
+function getMainUI(extension) {
+  if (extension === "/stream") {
       return (
         <div className="uiContainer">
           <BackgroundImage />
           <Navigation />
           <MStream />
-          <AboutInformation />
         </div>
       );
     } else if (extension === "/settings") {
@@ -255,57 +319,22 @@ class Home extends React.Component {
         <div className="uiContainer">
           <BackgroundImage />
           <Navigation />
-          <Slogan />,
-          {React.createElement(Login, this.state)},
+          <Slogan />
+          <Login />
           <AboutInformation />
         </div>
       );
     }
-  }
-}
-
-// JS Functions
-
-/**
- * Sets the page extension to load the proper components
- */
-function setPageExtension(pageExtension) {
-  var props = new Object();
-  props["pageExtension"] = pageExtension;
-  props["loadType"] = "nonDefaultLoad"
-
-  ReactDOM.render(React.createElement(Home, props), document.getElementById("root"));
-}
-
-/**
- * Renders the stream UI components and gets the data
- */
-function loadStream(response) {
-  console.log("stream loaded");
-  console.log(response);
-  setPageExtension("/stream");
-}
-
-/**
- * Renders the UI components
- */
-function loadLogin() {
-  console.log("User is now logged out.");
 }
 
 ////////
 
-function loadInitialPage() {
-  var props = new Object();
-  props["loadType"] = "defaultLoad";
-
-  ReactDOM.render(React.createElement(Home, props), document.getElementById("root"));
-}
-
+/**
+ * To detect if this is the first time the user opened the page
+ */
 var opening = true;
 
 if (opening) {
   loadInitialPage();
   opening = false;
-  console.log("opening page");  
 };
